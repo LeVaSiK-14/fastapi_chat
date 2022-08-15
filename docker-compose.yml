@@ -8,17 +8,17 @@ services:
     container_name: redis_fastapi_db
     ports:
       - 6379:6379
-    command: ['redis-server', '--appemdonly', 'yes']
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
     volumes:
       - redis-data:/data
 
+
   redis-commander:
     image: rediscommander/redis-commander:latest
-    container_name: redis_ui
+    hostname: redis-commander
+    container_name: redis-commander
     environment:
-      - REDIS_HOSTS=local:redis:6379
-      - HTTP_USER=admin
-      - HTTP_password=admin
+      - REDIS_HOSTS=redis
     ports: 
       - 8081:8081
     depends_on: 
